@@ -1,0 +1,33 @@
+{
+    "name": "lastcall/composer-upstream-files",
+    "description": "Composer command to update application files from various upstream sources.",
+    "type": "composer-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rob Bayliss",
+            "email": "rob@lastcallmedia.com"
+        }
+    ],
+    "require": {
+        "composer-plugin-api": "^1.1"
+    },
+    "require-dev": {
+        "composer/composer": "^1.5",
+        "phpunit/phpunit": "^6.5",
+        "friendsofphp/php-cs-fixer": "^2.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "LastCall\\ComposerUpstreamFiles\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LastCall\\ComposerUpstreamFiles\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "class": "LastCall\\ComposerUpstreamFiles\\Plugin"
+    }
+}
