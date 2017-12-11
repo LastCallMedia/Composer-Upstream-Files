@@ -20,7 +20,7 @@ class RemoteFilesystemMock extends RemoteFilesystem
     /**
      * @param array $contentMap associative array of locations and content
      */
-    public function __construct(array $contentMap)
+    public function __construct(array $contentMap = [])
     {
         $this->contentMap = $contentMap;
     }

@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace LastCall\ComposerUpstreamFiles;
+namespace LastCall\ComposerUpstreamFiles\Command;
 
 use Composer\Command\BaseCommand;
 use Composer\Factory;
