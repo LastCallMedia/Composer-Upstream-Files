@@ -88,6 +88,28 @@ class TokenReplacerTest extends TestCase
 
     /**
      * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unknown package: foo/bar
+     */
+    public function testUnknownPackageError()
+    {
+        $replacer = new TokenReplacer(new ArrayRepository());
+        $replacer->replace('{{foo/bar.version}}', []);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unknown property: foo.error
+     */
+    public function testUnknownPropertyError()
+    {
+        $replacer = new TokenReplacer(new ArrayRepository([
+      new Package('foo', '1.0.0', '1.0.0'),
+    ]));
+        $replacer->replace('{{foo.error}}', []);
+    }
+
+    /**
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage Infinite loop detected in foo token
      */
     public function testInfiniteLoopError()
