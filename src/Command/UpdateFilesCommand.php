@@ -7,14 +7,16 @@
  * with this source code in the file LICENSE.
  */
 
-namespace LastCall\ComposerUpstreamFiles;
+namespace LastCall\ComposerUpstreamFiles\Command;
 
 use Composer\Command\BaseCommand;
 use Composer\Factory;
-use Composer\IO\ConsoleIO;
-use Composer\Util\Filesystem;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use LastCall\ComposerUpstreamFiles\Manifest\ManifestFactory;
+use LastCall\ComposerUpstreamFiles\TokenReplacer;
+use LastCall\ComposerUpstreamFiles\FileManager;
+use Composer\Util\Filesystem;
 
 class UpdateFilesCommand extends BaseCommand
 {
@@ -25,19 +27,19 @@ class UpdateFilesCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $package = $this->getComposer()->getPackage();
-        $repository = $this->getComposer()->getRepositoryManager()->getLocalRepository();
-        $io = new ConsoleIO($input, $output, $this->getHelperSet());
+        $composer = $this->getComposer(true);
+        $package = $composer->getPackage();
+        $repository = $composer->getRepositoryManager()->getLocalRepository();
+        $io = $this->getIO();
         $rfs = Factory::createRemoteFilesystem($io, $this->getComposer()->getConfig());
-        $tokenReplacer = new TokenReplacer($repository);
-        $manager = new FileManager($tokenReplacer);
         $fs = new Filesystem();
 
-        $extra = $package->getExtra();
-        $spec = isset($extra['upstream-files']) ? $extra['upstream-files'] : [];
-        assert('is_array($spec)');
+        $manifestFactory = new ManifestFactory($rfs);
+        $tokenReplacer = new TokenReplacer($repository);
+        $manager = new FileManager($tokenReplacer, $manifestFactory);
+        $manifest = $manifestFactory->fromPackage($package);
 
-        foreach ($manager->getFiles($spec) as $source => $dest) {
+        foreach ($manager->getFiles($manifest) as $source => $dest) {
             $parts = parse_url($source);
             $host = sprintf('%s://%s', $parts['scheme'], $parts['host']);
             $io->write(sprintf('Downloading %s', $source));

@@ -11,9 +11,11 @@ namespace LastCall\ComposerUpstreamFiles;
 
 use Composer\Composer;
 use Composer\IO\IOInterface;
+use Composer\Plugin\Capability\CommandProvider;
 use Composer\Plugin\Capable;
 use Composer\Plugin\PluginInterface;
-use Composer\Plugin\Capability\CommandProvider;
+use LastCall\ComposerUpstreamFiles\Command\ListFilesCommand;
+use LastCall\ComposerUpstreamFiles\Command\UpdateFilesCommand;
 
 class Plugin implements PluginInterface, Capable, CommandProvider
 {
@@ -25,14 +27,15 @@ class Plugin implements PluginInterface, Capable, CommandProvider
     public function getCapabilities()
     {
         return [
-      CommandProvider::class => static::class,
-    ];
+          CommandProvider::class => static::class,
+        ];
     }
 
     public function getCommands()
     {
         return [
-      new UpdateFilesCommand(),
-    ];
+          new UpdateFilesCommand(),
+          new ListFilesCommand(),
+        ];
     }
 }

@@ -52,7 +52,11 @@ class TokenReplacer
     {
         list($packageName, $propertyPath) = explode('.', $token, 2);
         if ($package = $this->repository->findPackage($packageName, '*')) {
-            return $this->resolvePackageProperty($package, $propertyPath);
+            try {
+                return $this->resolvePackageProperty($package, $propertyPath);
+            } catch (\RuntimeException $e) {
+                throw new \RuntimeException(sprintf('Unknown property: %s', $token));
+            }
         }
         throw new \RuntimeException(sprintf('Unknown package: %s', $packageName));
     }
@@ -60,10 +64,10 @@ class TokenReplacer
     protected function resolvePackageProperty(PackageInterface $package, $property)
     {
         switch ($property) {
-      case 'version':
-        return $package->getPrettyVersion();
-      default:
-        throw new \RuntimeException(sprintf('Invalid property %s', $property));
-    }
+          case 'version':
+            return $package->getPrettyVersion();
+          default:
+            throw new \RuntimeException(sprintf('Invalid property %s', $property));
+        }
     }
 }
