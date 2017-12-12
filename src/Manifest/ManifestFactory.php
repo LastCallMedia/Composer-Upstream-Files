@@ -46,14 +46,14 @@ class ManifestFactory
           'files' => [],
           'tokens' => [],
           'manifests' => [],
-          'srcExcludes' => null,
-          'destExcludes' => null,
+          'sourceExcludes' => null,
+          'destinationExcludes' => null,
         ];
-        if (isset($arr['srcExcludes'])) {
-            $arr['srcExcludes'] = new ExcludeSet($arr['srcExcludes']);
+        if (isset($arr['sourceExcludes'])) {
+            $arr['sourceExcludes'] = new ExcludeSet($arr['sourceExcludes']);
         }
-        if (isset($arr['destExcludes'])) {
-            $arr['destExcludes'] = new ExcludeSet($arr['destExcludes']);
+        if (isset($arr['destinationExcludes'])) {
+            $arr['destinationExcludes'] = new ExcludeSet($arr['destinationExcludes']);
         }
 
         return new Manifest(
@@ -61,8 +61,8 @@ class ManifestFactory
           $arr['files'],
           $arr['tokens'],
           $arr['manifests'],
-          $arr['srcExcludes'],
-          $arr['destExcludes']
+          $arr['sourceExcludes'],
+          $arr['destinationExcludes']
         );
     }
 

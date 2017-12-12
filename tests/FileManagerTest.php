@@ -221,8 +221,8 @@ class FileManagerTest extends TestCase
     {
         $files = [
           'child' => [
-            'srcExcludes' => ['/1/'],
-            'destExcludes' => ['/two/'],
+            'sourceExcludes' => ['/1/'],
+            'destinationExcludes' => ['/two/'],
             'files' => [
               '1' => 'one',
               '2' => 'two',

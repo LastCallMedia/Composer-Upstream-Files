@@ -104,7 +104,7 @@ Manifests can also specify other manifests, which is handy when you need to spec
 
 ### Exclusions
 
-It is also possible to exclude individual files.  This is most useful when you use manifests from upstream projects, and don't want to pull in a certain file from upstream:
+It is also possible to exclude files based on their source or destination.  This is most useful when you use manifests from upstream projects, and don't want to pull in certain files from upstream:
  
 ```json
 {
@@ -113,12 +113,14 @@ It is also possible to exclude individual files.  This is most useful when you u
       "manifests": [
         "drupal.json",
       ],
-      "files": {
-        "-my-file.php": "",
-        "dummy": "-my-file.php"
-      }
+      "sourceExcludes": [
+        "@https://raw.githubusercontent.com/LastCallMedia/Drupal-Scaffold/.*@"
+      ],
+      "destinationExcludes": [
+        "/.gitignore/"
+      ]
     }
   }
 }
 ```
-A minus sign (`-`) indicates an exclusion.  Files can be excluded either by the source (as in the first file listed here), or by destination (as in the second file). When excluding by source, it doesn't matter what you put for the destination, and when excluding by destination, it doesn't matter what you put for the source.
+The `sourceExcludes` and `destinationExcludes` properties are both arrays of regular expressions indicating the files you wish to exclude.  `sourceExcludes` will be matched against the fully resolved source URL, and `destinationExcludes` will be matched against the fully resolved destination path.
