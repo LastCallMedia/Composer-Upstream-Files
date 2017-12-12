@@ -1,13 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rbayliss
- * Date: 12/11/17
- * Time: 6:33 PM
+
+/*
+ * This file is part of Composer Upstream Files.
+ * (c) 2017 Last Call Media, Rob Bayliss <rob@lastcallmedia.com>
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace LastCall\ComposerUpstreamFiles\Command;
-
 
 use Composer\Command\BaseCommand;
 use Composer\Factory;
@@ -27,7 +27,7 @@ class ListFilesCommand extends BaseCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $composer = $this->getComposer(TRUE);
+        $composer = $this->getComposer(true);
         $package = $composer->getPackage();
         $repository = $composer->getRepositoryManager()->getLocalRepository();
         $rfs = Factory::createRemoteFilesystem($this->getIO(), $this->getComposer()->getConfig());
@@ -40,10 +40,9 @@ class ListFilesCommand extends BaseCommand
         $io = new SymfonyStyle($input, $output);
         $io->title('Upstream Files:');
         $rows = [];
-          foreach($manager->getFiles($manifest) as $src => $dest) {
+        foreach ($manager->getFiles($manifest) as $src => $dest) {
             $rows[] = [$dest, $src];
-          }
+        }
         $io->table(['Destination', 'Source'], $rows);
     }
-
 }

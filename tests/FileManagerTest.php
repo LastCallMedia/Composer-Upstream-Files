@@ -19,7 +19,6 @@ use PHPUnit\Framework\TestCase;
 
 class FileManagerTest extends TestCase
 {
-
     public function getTestCases()
     {
         return [
@@ -205,7 +204,8 @@ class FileManagerTest extends TestCase
         $this->assertSpecMatches($manifest, $files, []);
     }
 
-    public function testRemovesExcludesFromSelf() {
+    public function testRemovesExcludesFromSelf()
+    {
         $manifest = new Manifest(
           '',
           ['1' => 'one', '2' => 'two', '3' => 'three'],
@@ -217,7 +217,8 @@ class FileManagerTest extends TestCase
         $this->assertSpecMatches($manifest, [], ['2' => 'two']);
     }
 
-    public function testRemovesExcludesFromReferenced() {
+    public function testRemovesExcludesFromReferenced()
+    {
         $files = [
           'child' => [
             'srcExcludes' => ['/1/'],
@@ -257,5 +258,4 @@ class FileManagerTest extends TestCase
           iterator_to_array($manager->getFiles($root))
         );
     }
-
 }

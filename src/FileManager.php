@@ -16,7 +16,6 @@ use LastCall\ComposerUpstreamFiles\Manifest\Manifest;
 
 class FileManager
 {
-
     public function __construct(
       TokenReplacer $replacer,
       ManifestFactory $factory
@@ -25,7 +24,7 @@ class FileManager
         $this->factory = $factory;
     }
 
-    public function getFiles(Manifest $manifest, Manifest $parent = NULL)
+    public function getFiles(Manifest $manifest, Manifest $parent = null)
     {
         $tokens = $parent ? $parent->getTokens() + $manifest->getTokens() : $manifest->getTokens();
         $srcExclude = $manifest->getSourceExcludes();
@@ -40,7 +39,7 @@ class FileManager
 
             // Filter files against the exclude patterns defined in this file.
             // They'll be filtered against the parent as well as they bubble up.
-            if(!$srcExclude->matches($src) && !$destExclude->matches($dest)) {
+            if (!$srcExclude->matches($src) && !$destExclude->matches($dest)) {
                 yield $src => $dest;
             }
         }
@@ -52,8 +51,8 @@ class FileManager
             );
             $refManifest = $this->factory->fromRemoteFile($refUri);
             $files = $this->getFiles($refManifest, $manifest);
-            foreach($files as $src => $dest) {
-                if(!$srcExclude->matches($src) && !$destExclude->matches($dest)) {
+            foreach ($files as $src => $dest) {
+                if (!$srcExclude->matches($src) && !$destExclude->matches($dest)) {
                     yield $src => $dest;
                 }
             }
@@ -62,7 +61,7 @@ class FileManager
 
     private function resolveUri($uri, $parent)
     {
-        return (string)UriResolver::resolve(
+        return (string) UriResolver::resolve(
           new Uri($parent),
           new Uri($uri)
         );

@@ -1,9 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rbayliss
- * Date: 12/11/17
- * Time: 5:13 PM
+
+/*
+ * This file is part of Composer Upstream Files.
+ * (c) 2017 Last Call Media, Rob Bayliss <rob@lastcallmedia.com>
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace LastCall\ComposerUpstreamFiles\Manifest;
@@ -12,7 +13,6 @@ use LastCall\ComposerUpstreamFiles\ExcludeSet;
 
 class Manifest
 {
-
     private $uri = '';
 
     private $files = [];
@@ -37,7 +37,7 @@ class Manifest
         $this->files = $files;
         $this->tokens = $tokens;
         $this->manifests = $manifests;
-        $this->sourceExcludes = $sourceExcludes ? $sourceExcludes : new ExcludeSet( );
+        $this->sourceExcludes = $sourceExcludes ? $sourceExcludes : new ExcludeSet();
         $this->destExcludes = $destExcludes ? $destExcludes : new ExcludeSet();
     }
 

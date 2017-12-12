@@ -27,7 +27,7 @@ class UpdateFilesCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $composer = $this->getComposer(TRUE);
+        $composer = $this->getComposer(true);
         $package = $composer->getPackage();
         $repository = $composer->getRepositoryManager()->getLocalRepository();
         $io = $this->getIO();

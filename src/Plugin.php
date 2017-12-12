@@ -19,7 +19,6 @@ use LastCall\ComposerUpstreamFiles\Command\UpdateFilesCommand;
 
 class Plugin implements PluginInterface, Capable, CommandProvider
 {
-
     public function activate(Composer $composer, IOInterface $io)
     {
         // No-op.

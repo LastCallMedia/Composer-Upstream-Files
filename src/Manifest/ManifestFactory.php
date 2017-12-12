@@ -1,9 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rbayliss
- * Date: 12/11/17
- * Time: 5:22 PM
+
+/*
+ * This file is part of Composer Upstream Files.
+ * (c) 2017 Last Call Media, Rob Bayliss <rob@lastcallmedia.com>
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace LastCall\ComposerUpstreamFiles\Manifest;
@@ -13,10 +14,8 @@ use Composer\Util\RemoteFilesystem;
 use LastCall\ComposerUpstreamFiles\ExcludeSet;
 use Seld\JsonLint\JsonParser;
 
-
 class ManifestFactory
 {
-
     public function __construct(RemoteFilesystem $rfs)
     {
         $this->rfs = $rfs;
@@ -32,9 +31,11 @@ class ManifestFactory
         return $this->fromArray($obj);
     }
 
-    public function fromPackage(PackageInterface $package) {
+    public function fromPackage(PackageInterface $package)
+    {
         $extra = $package->getExtra();
         $extra += ['upstream-files' => []];
+
         return $this->fromArray($extra['upstream-files']);
     }
 
@@ -48,10 +49,10 @@ class ManifestFactory
           'srcExcludes' => null,
           'destExcludes' => null,
         ];
-        if(isset($arr['srcExcludes'])) {
+        if (isset($arr['srcExcludes'])) {
             $arr['srcExcludes'] = new ExcludeSet($arr['srcExcludes']);
         }
-        if(isset($arr['destExcludes'])) {
+        if (isset($arr['destExcludes'])) {
             $arr['destExcludes'] = new ExcludeSet($arr['destExcludes']);
         }
 
@@ -71,5 +72,4 @@ class ManifestFactory
 
         return sprintf('%s://%s', $parts['scheme'], $parts['host']);
     }
-
 }

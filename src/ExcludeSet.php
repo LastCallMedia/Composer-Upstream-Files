@@ -1,13 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rbayliss
- * Date: 12/11/17
- * Time: 5:56 PM
+
+/*
+ * This file is part of Composer Upstream Files.
+ * (c) 2017 Last Call Media, Rob Bayliss <rob@lastcallmedia.com>
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace LastCall\ComposerUpstreamFiles;
-
 
 class ExcludeSet
 {
@@ -16,12 +16,14 @@ class ExcludeSet
         $this->patterns = $patterns;
     }
 
-    public function matches($uri) {
-        foreach($this->patterns as $pattern) {
-            if(preg_match($pattern, $uri)) {
-                return TRUE;
+    public function matches($uri)
+    {
+        foreach ($this->patterns as $pattern) {
+            if (preg_match($pattern, $uri)) {
+                return true;
             }
         }
-        return FALSE;
+
+        return false;
     }
 }
