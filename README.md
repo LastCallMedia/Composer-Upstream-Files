@@ -114,10 +114,10 @@ It is also possible to exclude files based on their source or destination.  This
         "drupal.json",
       ],
       "sourceExcludes": [
-        "@https://raw.githubusercontent.com/LastCallMedia/Drupal-Scaffold/.*@"
+        "@LastCallMedia/Drupal-Scaffold@"
       ],
       "destinationExcludes": [
-        "/.gitignore/"
+        "/\\.gitattributes/"
       ]
     }
   }
