@@ -16,11 +16,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use LastCall\ComposerUpstreamFiles\Manifest\ManifestFactory;
 use LastCall\ComposerUpstreamFiles\TokenReplacer;
 use LastCall\ComposerUpstreamFiles\FileManager;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ListFilesCommand extends BaseCommand
 {
-    use UpstreamFilesCommandTrait;
-
     public function configure()
     {
         $this->setName('upstream-files:list');
@@ -33,16 +32,18 @@ class ListFilesCommand extends BaseCommand
         $repository = $composer->getRepositoryManager()->getLocalRepository();
         $rfs = Factory::createRemoteFilesystem($this->getIO(), $this->getComposer()->getConfig());
 
-
         $manifestFactory = new ManifestFactory($rfs);
         $tokenReplacer = new TokenReplacer($repository);
         $manager = new FileManager($tokenReplacer, $manifestFactory);
-        $manifest = $manifestFactory->fromRemoteFile($package);
+        $manifest = $manifestFactory->fromPackage($package);
 
-        $files = $manager->getFiles($manifest);
-        foreach($manager->getFiles($manifest) as $file) {
-
-        }
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Upstream Files:');
+        $rows = [];
+          foreach($manager->getFiles($manifest) as $src => $dest) {
+            $rows[] = [$dest, $src];
+          }
+        $io->table(['Destination', 'Source'], $rows);
     }
 
 }

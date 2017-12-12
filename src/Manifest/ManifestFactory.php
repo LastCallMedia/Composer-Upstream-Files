@@ -34,7 +34,8 @@ class ManifestFactory
 
     public function fromPackage(PackageInterface $package) {
         $extra = $package->getExtra();
-
+        $extra += ['upstream-files' => []];
+        return $this->fromArray($extra['upstream-files']);
     }
 
     public function fromArray(array $arr)
