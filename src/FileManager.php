@@ -30,20 +30,6 @@ class FileManager
         $srcExclude = $manifest->getSourceExcludes();
         $destExclude = $manifest->getDestExcludes();
 
-        foreach ($manifest->getFiles() as $src => $dest) {
-            $src = $this->resolveUri(
-              $this->replacer->replace($src, $tokens),
-              $manifest->getUri()
-            );
-            $dest = $this->replacer->replace($dest, $tokens);
-
-            // Filter files against the exclude patterns defined in this file.
-            // They'll be filtered against the parent as well as they bubble up.
-            if (!$srcExclude->matches($src) && !$destExclude->matches($dest)) {
-                yield $src => $dest;
-            }
-        }
-
         foreach ($manifest->getManifests() as $ref) {
             $refUri = $this->resolveUri(
               $this->replacer->replace($ref, $tokens),
@@ -55,6 +41,20 @@ class FileManager
                 if (!$srcExclude->matches($src) && !$destExclude->matches($dest)) {
                     yield $src => $dest;
                 }
+            }
+        }
+
+        foreach ($manifest->getFiles() as $src => $dest) {
+            $src = $this->resolveUri(
+              $this->replacer->replace($src, $tokens),
+              $manifest->getUri()
+            );
+            $dest = $this->replacer->replace($dest, $tokens);
+
+            // Filter files against the exclude patterns defined in this file.
+            // They'll be filtered against the parent as well as they bubble up.
+            if (!$srcExclude->matches($src) && !$destExclude->matches($dest)) {
+                yield $src => $dest;
             }
         }
     }

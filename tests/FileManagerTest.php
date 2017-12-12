@@ -243,6 +243,33 @@ class FileManagerTest extends TestCase
         $this->assertSpecMatches($manifest, $files, ['5' => 'five']);
     }
 
+    public function testCanOverrideManifestDestinationWithLocal()
+    {
+        $files = [
+          'child' => [
+            'files' => [
+              'baz' => 'bar',
+            ],
+          ],
+        ];
+        $manifest = new Manifest(
+          '',
+          ['foo' => 'bar'],
+          [],
+          ['child']
+        );
+
+        $files = $this->assertSpecMatches($manifest, $files, [
+          'baz' => 'bar',
+          'foo' => 'bar',
+        ]);
+        // Also check the ordering.
+        $this->assertSame([
+          'baz' => 'bar',
+          'foo' => 'bar',
+        ], $files);
+    }
+
     private function assertSpecMatches(Manifest $root, array $files, $expected)
     {
         $fileContents = [];
@@ -253,9 +280,12 @@ class FileManagerTest extends TestCase
         $factory = new ManifestFactory($rfs);
         $replacer = new TokenReplacer(new ArrayRepository());
         $manager = new FileManager($replacer, $factory);
+        $files = iterator_to_array($manager->getFiles($root));
         $this->assertEquals(
           $expected,
-          iterator_to_array($manager->getFiles($root))
+          $files
         );
+
+        return $files;
     }
 }
