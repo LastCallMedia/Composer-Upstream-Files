@@ -158,6 +158,33 @@ class FileManagerTest extends TestCase
         );
     }
 
+    public function testResolvesTokensInMultilevelManifest()
+    {
+        $files = [
+          'child1' => [
+            'tokens' => ['token' => 'child1'],
+            'manifests' => ['child2'],
+          ],
+          'child2' => [
+            'tokens' => ['token' => 'child2'],
+            'files' => ['{{token}}' => '{{token}}'],
+          ],
+        ];
+        $manifest = new Manifest(
+          '',
+          [],
+          ['token' => 'root'],
+          ['child1']
+        );
+        $this->assertSpecMatches(
+          $manifest,
+          $files,
+          [
+            'root' => 'root',
+          ]
+        );
+    }
+
     public function testRootTokensOverrideChildTokens()
     {
         $files = [

@@ -36,7 +36,7 @@ class FileManager
               $manifest->getUri()
             );
             $refManifest = $this->factory->fromRemoteFile($refUri);
-            $files = $this->getFiles($refManifest, $manifest);
+            $files = $this->getFiles($refManifest, $manifest->withTokens($tokens));
             foreach ($files as $src => $dest) {
                 if (!$srcExclude->matches($src) && !$destExclude->matches($dest)) {
                     yield $src => $dest;

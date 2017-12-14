@@ -76,4 +76,12 @@ class Manifest
     {
         return $this->destExcludes;
     }
+
+    public function withTokens(array $tokens)
+    {
+        $clone = clone $this;
+        $clone->tokens = $tokens;
+
+        return $clone;
+    }
 }
