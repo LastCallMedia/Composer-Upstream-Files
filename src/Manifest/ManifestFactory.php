@@ -24,7 +24,8 @@ class ManifestFactory
 
     public function fromRemoteFile($uri)
     {
-        $contents = $this->rfs->getContents($this->parseOrigin($uri), $uri);
+        $origin = parse_url($uri, PHP_URL_HOST);
+        $contents = $this->rfs->getContents($origin, $uri);
         $obj = $this->parser->parse($contents, JsonParser::PARSE_TO_ASSOC);
         $obj['uri'] = $uri;
 
@@ -64,12 +65,5 @@ class ManifestFactory
           $arr['sourceExcludes'],
           $arr['destinationExcludes']
         );
-    }
-
-    private function parseOrigin($url)
-    {
-        $parts = parse_url($url);
-
-        return sprintf('%s://%s', $parts['scheme'], $parts['host']);
     }
 }
