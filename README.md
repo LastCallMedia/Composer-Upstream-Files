@@ -1,7 +1,7 @@
 Composer Upstream Files Plugin
 ==============================
 
-Composer Upstream Files Plugin is brought to you by your friends at [Last Call Media](https://www.lastcallmedia.com), this [Composer](https://getcomposer.org/) allows you to update files belonging to your application from various upstream sources.  There are a couple of different use cases for this:
+Composer Upstream Files Plugin is brought to you by your friends at [Last Call Media](https://www.lastcallmedia.com), this [Composer](https://getcomposer.org/) plugin allows you to update files belonging to your application from various upstream sources.  There are a couple of different use cases for this:
 
 * You have files that are required for specific versions of your application dependencies, but which need to live as part of your application.  For example, Drupal's `index.php` file is required, but must live outside of the `core` directory when you use a Composer based installation.
 * You have files you want to allow modifications to (so they're not appropriate for inclusion in a library), but that you want to keep in sync between different projects.  For example, a default `.eslintrc` or `phpcs.xml.dist`.
